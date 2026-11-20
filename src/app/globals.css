@@ -1,26 +1,308 @@
 @import "tailwindcss";
+@import "tw-animate-css";
+@import "shadcn/tailwind.css";
 
+@custom-variant dark (&:is(.dark *));
+
+/*
+ * HealthHands palette mapped onto shadcn tokens.
+ * Clinical, restrained palette: white surfaces, near-black green text, one deep teal for actions.
+ * Dark mode lifts the teal so links and buttons keep their contrast.
+ */
 :root {
   --background: #ffffff;
-  --foreground: #171717;
+  --foreground: #0f1f1d;
+  --card: #ffffff;
+  --card-foreground: #0f1f1d;
+  --popover: #ffffff;
+  --popover-foreground: #0f1f1d;
+  --primary: #0b5c4f;
+  --primary-foreground: #ffffff;
+  --secondary: #eef3f1;
+  --secondary-foreground: #0b4a40;
+  --muted: #f4f7f6;
+  --muted-foreground: #4b5d5a;
+  --accent: #eef3f1;
+  --accent-foreground: #0b4a40;
+  --destructive: #b42318;
+  --border: #dfe6e3;
+  --input: #c9d3cf;
+  --ring: #0b5c4f;
+  --radius: 0.5rem;
+
+  /* Brand extras used by the site, not by shadcn itself */
+  --cta: #0b5c4f;
+  --cta-hover: #084a40;
+  --cta-foreground: #ffffff;
+  --whatsapp: #107a41;
+  --whatsapp-hover: #0c6535;
+  --whatsapp-foreground: #ffffff;
+  --inverse: #0f1f1d;
+  --inverse-foreground: #e9efed;
+  --band: #0b3b34;
+  --band-foreground: #ffffff;
+  --highlight: #a8e6cf;
+
+  --chart-1: #0f6b5c;
+  --chart-2: #f2b705;
+  --chart-3: #3d5a58;
+  --chart-4: #128c4a;
+  --chart-5: #c9d8d2;
+  --sidebar: #f6f8f5;
+  --sidebar-foreground: #10302f;
+  --sidebar-primary: #0f6b5c;
+  --sidebar-primary-foreground: #f6f8f5;
+  --sidebar-accent: #dcebe5;
+  --sidebar-accent-foreground: #0a4f44;
+  --sidebar-border: #c9d8d2;
+  --sidebar-ring: #0f6b5c;
+}
+
+.dark {
+  --background: #0c1413;
+  --foreground: #e3ebe8;
+  --card: #121c1b;
+  --card-foreground: #e3ebe8;
+  --popover: #141f1d;
+  --popover-foreground: #e3ebe8;
+  --primary: #5fc4a8;
+  --primary-foreground: #04201b;
+  --secondary: #182523;
+  --secondary-foreground: #cfe5dd;
+  --muted: #111b1a;
+  --muted-foreground: #9fb1ac;
+  --accent: #1b2a28;
+  --accent-foreground: #cfe5dd;
+  --destructive: #f97066;
+  --border: #22302e;
+  --input: #2f403d;
+  --ring: #5fc4a8;
+
+  --cta: #5fc4a8;
+  --cta-hover: #7dd3bb;
+  --cta-foreground: #04201b;
+  --whatsapp: #107a41;
+  --whatsapp-hover: #0c6535;
+  --whatsapp-foreground: #ffffff;
+  --inverse: #08100f;
+  --inverse-foreground: #e3ebe8;
+  --band: #0e2b27;
+  --band-foreground: #ffffff;
+  --highlight: #a8e6cf;
+
+  --sidebar: #12221f;
+  --sidebar-foreground: #e6efeb;
+  --sidebar-primary: #5cc9ab;
+  --sidebar-primary-foreground: #06201c;
+  --sidebar-accent: #1a302c;
+  --sidebar-accent-foreground: #c8e6db;
+  --sidebar-border: #26403b;
+  --sidebar-ring: #5cc9ab;
 }
 
 @theme inline {
+  --font-sans: var(--font-public-sans), ui-sans-serif, system-ui, sans-serif;
+  --font-heading: var(--font-source-serif), ui-serif, Georgia, serif;
+
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+
+  --color-cta: var(--cta);
+  --color-cta-hover: var(--cta-hover);
+  --color-cta-foreground: var(--cta-foreground);
+  --color-whatsapp: var(--whatsapp);
+  --color-whatsapp-hover: var(--whatsapp-hover);
+  --color-whatsapp-foreground: var(--whatsapp-foreground);
+  --color-inverse: var(--inverse);
+  --color-inverse-foreground: var(--inverse-foreground);
+  --color-band: var(--band);
+  --color-band-foreground: var(--band-foreground);
+  --color-highlight: var(--highlight);
+
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-ring: var(--sidebar-ring);
+
+  --radius-sm: calc(var(--radius) * 0.6);
+  --radius-md: calc(var(--radius) * 0.8);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) * 1.4);
+  --radius-2xl: calc(var(--radius) * 1.8);
+  --radius-3xl: calc(var(--radius) * 2.2);
+  --radius-4xl: calc(var(--radius) * 2.6);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  html {
+    @apply font-sans;
+    font-size: 106.25%;
+    scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
+  }
+  body {
+    @apply bg-background text-foreground;
+    line-height: 1.65;
+    font-feature-settings: "ss01", "cv11";
+  }
+  h1,
+  h2,
+  h3 {
+    @apply font-heading;
+    font-weight: 500;
+    line-height: 1.12;
+    letter-spacing: -0.015em;
+    text-wrap: balance;
+  }
+  p {
+    text-wrap: pretty;
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+/* ---------------------------------------------------------------------------
+ * View transitions (React <ViewTransition>, see components/page-transition.tsx)
+ * Recipes adapted from the Next.js "Designing view transitions" guide.
+ * ------------------------------------------------------------------------ */
+:root {
+  --duration-exit: 140ms;
+  --duration-enter: 200ms;
+  --duration-move: 320ms;
+}
+
+@keyframes vt-fade {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+@keyframes vt-slide {
+  from {
+    translate: var(--slide-offset);
+  }
+  to {
+    translate: 0;
+  }
+}
+
+/* Going deeper: list -> detail. Old page leaves left, new page arrives from the right. */
+::view-transition-old(.nav-forward) {
+  --slide-offset: -40px;
+  animation:
+    var(--duration-exit) ease-in both vt-fade reverse,
+    var(--duration-move) ease-in-out both vt-slide reverse;
+}
+::view-transition-new(.nav-forward) {
+  --slide-offset: 40px;
+  animation:
+    var(--duration-enter) ease-out var(--duration-exit) both vt-fade,
+    var(--duration-move) ease-in-out both vt-slide;
+}
+
+/* Going back up: detail -> list. */
+::view-transition-old(.nav-back) {
+  --slide-offset: 40px;
+  animation:
+    var(--duration-exit) ease-in both vt-fade reverse,
+    var(--duration-move) ease-in-out both vt-slide reverse;
+}
+::view-transition-new(.nav-back) {
+  --slide-offset: -40px;
+  animation:
+    var(--duration-enter) ease-out var(--duration-exit) both vt-fade,
+    var(--duration-move) ease-in-out both vt-slide;
+}
+
+/* Sideways between top-level pages: a quick crossfade, no implied direction. */
+::view-transition-old(.nav-lateral) {
+  animation: var(--duration-exit) ease-in both vt-fade reverse;
+}
+::view-transition-new(.nav-lateral) {
+  animation: var(--duration-enter) ease-out var(--duration-exit) both vt-fade;
+}
+
+/* Suspense reveal: streamed content settles in after its skeleton. */
+::view-transition-new(.reveal) {
+  --slide-y-offset: 8px;
+  animation:
+    var(--duration-enter) ease-out both vt-fade,
+    var(--duration-move) ease-out both vt-slide-y;
+}
+@keyframes vt-slide-y {
+  from {
+    transform: translateY(var(--slide-y-offset));
+  }
+  to {
+    transform: translateY(0);
+  }
+}
+
+/* Header and floating contact buttons stay put while page content animates.
+ * The header uses backdrop-blur, so hide its old snapshot to avoid a flash. */
+::view-transition-group(site-header),
+::view-transition-group(sticky-contact) {
+  animation: none;
+  z-index: 100;
+}
+::view-transition-old(site-header),
+::view-transition-old(sticky-contact) {
+  display: none;
+}
+::view-transition-new(site-header),
+::view-transition-new(sticky-contact) {
+  animation: none;
+}
+
+/* Let clicks reach the live page during a transition, and skip the browser's
+ * default whole-page crossfade so only the classed page content animates. */
+::view-transition {
+  pointer-events: none;
+}
+::view-transition-old(root) {
+  display: none;
+}
+::view-transition-new(root) {
+  animation: none;
+}
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  /* biome-ignore-start lint/complexity/noImportantStyles: reduced motion must override view transition animations */
+  ::view-transition-old(*),
+  ::view-transition-new(*),
+  ::view-transition-group(*) {
+    animation-duration: 0s !important;
+    animation-delay: 0s !important;
+  }
+  /* biome-ignore-end lint/complexity/noImportantStyles: reduced motion */
 }
